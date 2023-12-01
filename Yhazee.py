@@ -36,6 +36,9 @@ def rollsToGetTenzi(numTrials, numDice):
             if len(set(dice)) == 1:
                 rolls_count[min(rolls, 11)] += 1
                 break
+            if(rolls == 11):
+                rolls_count[11] += 1
+                break
             choice = mostFrequent(diceDict)
             dice = newRoll(dice, choice)
     return rolls_count
@@ -51,6 +54,12 @@ def main():
         elif choice.lower() == 't':
             numTrials = int(input("Enter the number of trials for Tenzi: "))
             numDice = int(input("Enter the number of dice: "))
-            rolls
+            tenzi = rollsToGetTenzi(numTrials, numDice)
+            tenzi["more than 10"] = tenzi.pop(11)
+            print(f"Rolls to get Tenzi with {numDice} dice:")
+            print(tenzi)
         else:
             break
+
+if __name__ == "__main__":
+    main()
