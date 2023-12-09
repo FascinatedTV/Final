@@ -45,19 +45,33 @@ def rollsToGetTenzi(numTrials, numDice):
 
 def main():
     while True:
-        choice = input("Enter 'Y' to play Yahtzee, 'T' to play Tenzi, or anything else to quit: ")
+        try:
+            choice = input("Enter 'Y' to play Yahtzee, 'T' to play Tenzi, or anything else to quit: ")
+        except EOFError:
+            break
         if choice.lower() == 'y':
-            numTrials = int(input("Enter the number of trials for Yahtzee: "))
-            numDice = int(input("Enter the number of dice: "))
+            try:
+                numTrials = int(input("Enter the number of trials for Yahtzee: "))
+            except EOFError:
+                numTrials = 10000
+            try:
+                numDice = int(input("Enter the number of dice: ") or 5)
+            except EOFError:
+                numDice = 5
             probability = probabilityYahtzee(numTrials, numDice)
-            print(f"Probability of Yahtzee with {numDice} dice: {probability:.4f}")
+            print(f"Chance of Yahtzee with {numDice} dice: {probability:.4f}")
         elif choice.lower() == 't':
-            numTrials = int(input("Enter the number of trials for Tenzi: "))
-            numDice = int(input("Enter the number of dice: "))
+            try:
+                numTrials = int(input("Enter the number of trials for Tenzi: "))
+            except EOFError:
+                numTrials = 10000
+            try:
+                numDice = int(input("Enter the number of dice: "))
+            except EOFError:
+                numDice = 10
             tenzi = rollsToGetTenzi(numTrials, numDice)
             tenzi["more than 10"] = tenzi.pop(11)
-            print(f"Rolls to get Tenzi with {numDice} dice:")
-            print(tenzi)
+            print(f"Rolls to get Tenzi with {numDice} dice:\n{tenzi}")
         else:
             break
 
